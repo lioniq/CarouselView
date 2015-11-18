@@ -25,6 +25,15 @@ class ViewController: UIViewController {
         ]
         
         carouselView.imageUrls = imageUrls
+        
+        print("[ViewController viewDidLoad] carouselView.frame: \(carouselView.frame), pageControl: \(carouselView.pageControl!.frame), scrollView: \(carouselView.scrollView!.frame), scrollView.content: \(carouselView.scrollView!.contentSize)")
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        print("[ViewController viewWillAppear] carouselView.frame: \(carouselView.frame), pageControl: \(carouselView.pageControl!.frame), scrollView: \(carouselView.scrollView!.frame), scrollView.content: \(carouselView.scrollView!.contentSize)")
+    }
+    override func viewDidAppear(animated: Bool) {
+        print("[ViewController viewDidAppear] carouselView.frame: \(carouselView.frame), pageControl: \(carouselView.pageControl!.frame), scrollView: \(carouselView.scrollView!.frame), scrollView.content: \(carouselView.scrollView!.contentSize)")
     }
 
     override func didReceiveMemoryWarning() {

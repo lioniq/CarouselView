@@ -42,6 +42,20 @@ class CarouselViewTests: XCTestCase {
         XCTAssertEqual(imageUrls.count, carouselView!.pageControl!.numberOfPages)
     }
     
+//    func testPageControl() {
+//        
+//        carouselView!.layoutSubviews()
+//        
+//        // 8x left and right margin
+//        let pcWidth = self.view.frame.width - (2 * 8)
+//        
+//        // 18px bottom margin
+//        let pcY = self.view.frame.height - carouselView!.pageControl!.frame.height - 18
+//        
+//        XCTAssertEqual(pcWidth, carouselView!.pageControl!.frame.width)
+//        XCTAssertEqual(pcY, carouselView!.pageControl!.frame.origin.y)
+//    }
+    
     func testTimer() {
         XCTAssertNotNil(carouselView!.timer)
         XCTAssert(carouselView!.timer.valid)

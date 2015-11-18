@@ -23,6 +23,8 @@ class CarouselView: UIView {
         }
     }
     
+    var imageViews = [UIImageView]()
+    
     // XIB subviews
     @IBOutlet weak var pageControl: UIPageControl?
     @IBOutlet weak var scrollView: UIScrollView?
@@ -61,9 +63,12 @@ class CarouselView: UIView {
         view.frame = self.bounds
         view.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
         
+        view.addConstraints(self.constraints)
+        
         self.addSubview(self.view)
         
         self.configSubviews()
+        self.scrollView?.delegate = self
     }
     
     private func configSubviews() {
@@ -71,16 +76,39 @@ class CarouselView: UIView {
         self.scrollView!.pagingEnabled = true
         self.scrollView!.showsHorizontalScrollIndicator = false
         
-        let screenWidth = self.view.frame.width
-        let contentWidth = Int(screenWidth) * (self.imageUrls.count + 1)
-        
-        self.scrollView!.contentSize = CGSize(width: contentWidth, height: 0)
-        self.scrollView!.contentOffset = CGPoint(x: screenWidth, y: 0)
+        resizeScrollView()
         
         // Pagecontrol setup
         self.pageControl!.numberOfPages = self.imageUrls.count
     }
     
+    // MARK: layout subviews
+    override func layoutSubviews() {
+//        super.layoutSubviews()
+        resizeScrollView()
+        layoutImageViews()
+        
+        print("[CarouselView layoutSubviews] imageView.frame: \(self.imageViews.first!.frame)")
+    }
+    
+    // resize imageViews when scrollView or parent views are laid out
+    private func layoutImageViews() {
+        let n = self.imageViews.count
+        let screenWidth = self.scrollView!.frame.width
+        let screenHeight = self.scrollView!.frame.height
+        
+        for i in 0..<n {
+            self.imageViews[i].frame = CGRectMake(screenWidth * CGFloat(i + 1), 0, screenWidth, screenHeight)
+        }
+    }
+    
+    private func resizeScrollView() {
+        let screenWidth = self.view.frame.width
+        let contentWidth = Int(screenWidth) * (self.imageUrls.count + 1)
+        
+        self.scrollView!.contentSize = CGSize(width: contentWidth, height: 0)
+        self.scrollView!.contentOffset = CGPoint(x: screenWidth, y: 0)
+    }
     
     //MARK: convenience init
     convenience init(frame: CGRect, imageUrls: [String], placeholderImage: UIImage?) {
@@ -102,15 +130,34 @@ class CarouselView: UIView {
         let n = self.imageUrls.count
         let screenWidth = self.frame.width
         
+        // reset
+        self.imageViews = [UIImageView]()
+        
         for i in 0..<n {
             let imageView = UIImageView(frame: CGRect(x: screenWidth * CGFloat(i + 1), y: 0, width: screenWidth, height: self.frame.height))
             imageView.contentMode = UIViewContentMode.ScaleAspectFill
             let imageUrl = self.imageUrls[i]
             let url = NSURL(string: imageUrl)!
             imageView.sd_setImageWithURL(url, placeholderImage: self.placeholderImage)
-            print("[CarouselView setupPhotos] photo with url: \(imageUrl)")
+            
+            self.imageViews.append(imageView)
+            
+//            print("[CarouselView setupPhotos] photo with url: \(imageUrl), imageView frame: \(imageView.frame)")
             self.scrollView!.addSubview(imageView)
         }
+        
+        if n > 1 {
+            // add 1st pic to end for circular scroll
+            let imageView = UIImageView(frame: CGRect(x: screenWidth * CGFloat(n), y: 0, width: screenWidth, height: self.frame.height))
+            imageView.contentMode = UIViewContentMode.ScaleAspectFill
+            let imageUrl = self.imageUrls.first
+            let url = NSURL(string: imageUrl!)!
+            imageView.sd_setImageWithURL(url, placeholderImage: self.placeholderImage)
+            
+            self.imageViews.append(imageView)
+            self.scrollView!.addSubview(imageView)
+        }
+        
     }
     
     // MARK: Timer
