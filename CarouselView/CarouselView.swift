@@ -31,6 +31,7 @@ class CarouselView: UIView {
     var timer: NSTimer = NSTimer()
     var placeholderImage: UIImage = UIImage(named: "placeholder")!
 
+    // MARK: Lifecycle
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.setup()
@@ -45,7 +46,7 @@ class CarouselView: UIView {
         self.timer.invalidate()
     }
     
-    //MARK: subviews
+    //MARK: setup subviews
     func loadViewFromNib() -> UIView {
         let bundle = NSBundle(forClass: self.dynamicType)
         let nib = UINib(nibName: nibName, bundle: bundle)
@@ -84,11 +85,11 @@ class CarouselView: UIView {
     //MARK: convenience init
     convenience init(frame: CGRect, imageUrls: [String], placeholderImage: UIImage?) {
         self.init(frame: frame)
+        self.placeholderImage = placeholderImage ?? self.placeholderImage
         
         self.imageUrls = imageUrls
-        
-        self.placeholderImage = placeholderImage ?? self.placeholderImage
-    
+        self.configSubviews()
+        self.setupPhotos()
         self.startTimer()
     }
     
@@ -107,7 +108,7 @@ class CarouselView: UIView {
             let imageUrl = self.imageUrls[i]
             let url = NSURL(string: imageUrl)!
             imageView.sd_setImageWithURL(url, placeholderImage: self.placeholderImage)
-            
+            print("[CarouselView setupPhotos] photo with url: \(imageUrl)")
             self.scrollView!.addSubview(imageView)
         }
     }

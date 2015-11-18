@@ -10,6 +10,6 @@ Drag into Storyboard (or init programmatically), and set `imageUrls` to an array
 ````
 carouselView.imageUrls = [
 	"http://api.myappdomain.com/image123.jpg", 
-	"http://api.myappdomain.com/image456.jpg", ]
+	"http://api.myappdomain.com/image456.jpg" ]
 ````
 
