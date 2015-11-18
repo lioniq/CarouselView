@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CarouselView" customModule="CarouselViewDemo" customModuleProvider="target">
+            <connections>
+                <outlet property="pageControl" destination="WEL-70-YEP" id="O7j-iv-1J4"/>
+                <outlet property="scrollView" destination="7sj-gy-R10" id="T9o-jr-Tfy"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7sj-gy-R10">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <animations/>
+                </scrollView>
+                <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="WEL-70-YEP">
+                    <rect key="frame" x="8" y="545" width="584" height="37"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="37" id="PgQ-yO-dEQ"/>
+                        <constraint firstAttribute="width" constant="70" id="vQW-Ug-Gb1"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="vQW-Ug-Gb1"/>
+                        </mask>
+                    </variation>
+                </pageControl>
+            </subviews>
+            <animations/>
+            <color key="backgroundColor" red="0.2274509804" green="0.73725490199999999" blue="0.74901960779999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="WEL-70-YEP" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="5Jd-sP-EXW"/>
+                <constraint firstItem="7sj-gy-R10" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="6oQ-47-AHA"/>
+                <constraint firstAttribute="trailing" secondItem="7sj-gy-R10" secondAttribute="trailing" id="7hO-oF-pl2"/>
+                <constraint firstAttribute="trailing" secondItem="WEL-70-YEP" secondAttribute="trailing" constant="8" id="BWs-Vz-azh"/>
+                <constraint firstAttribute="bottom" secondItem="WEL-70-YEP" secondAttribute="bottom" constant="18" id="EGC-IN-EXd"/>
+                <constraint firstAttribute="bottom" secondItem="7sj-gy-R10" secondAttribute="bottom" id="h5k-8b-B1A"/>
+                <constraint firstItem="7sj-gy-R10" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="vhj-3d-P8n"/>
+                <constraint firstItem="WEL-70-YEP" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="wxg-7F-61I"/>
+            </constraints>
+        </view>
+    </objects>
+</document>
