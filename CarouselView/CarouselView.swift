@@ -140,6 +140,7 @@ class CarouselView: UIView {
             let url = NSURL(string: imageUrl)!
             imageView.sd_setImageWithURL(url, placeholderImage: self.placeholderImage)
             
+            imageView.clipsToBounds = true
             self.imageViews.append(imageView)
             
 //            print("[CarouselView setupPhotos] photo with url: \(imageUrl), imageView frame: \(imageView.frame)")
