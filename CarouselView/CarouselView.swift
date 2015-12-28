@@ -147,6 +147,7 @@ class CarouselView: UIView {
     func addSubImageView(imageViewFrame: CGRect, imageURL: String) {
         
         let imageView = UIImageView(frame: imageViewFrame)
+        imageView.clipsToBounds = true
         imageView.contentMode = UIViewContentMode.ScaleAspectFill
         let url = NSURL(string: imageURL)!
         imageView.sd_setImageWithURL(url, placeholderImage: self.placeholderImage)
@@ -157,6 +158,7 @@ class CarouselView: UIView {
     func addFirstImageView(firstFrame: CGRect) {
         
         let firstImageView = UIImageView(frame: firstFrame)
+        firstImageView.clipsToBounds = true
         firstImageView.contentMode = UIViewContentMode.ScaleAspectFill
         firstImageView.sd_setImageWithURL(NSURL(string: imageUrls.last!), placeholderImage: self.placeholderImage)
         self.imageViews.append(firstImageView)
