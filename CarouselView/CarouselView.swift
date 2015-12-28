@@ -98,7 +98,7 @@ class CarouselView: UIView {
         let screenHeight = self.scrollView!.frame.height
         
         for i in 0..<n {
-            self.imageViews[i].frame = CGRectMake(screenWidth * CGFloat(i + 1), 0, screenWidth, screenHeight)
+            self.imageViews[i].frame = CGRectMake(screenWidth * CGFloat(i), 0, screenWidth, screenHeight)
         }
     }
     
@@ -128,37 +128,41 @@ class CarouselView: UIView {
     private func setupPhotos() {
         
         let n = self.imageUrls.count
-        let screenWidth = self.frame.width
+        let screenWidth = self.scrollView!.frame.width
+        let screenHeight = self.scrollView!.frame.height
         
         // reset
         self.imageViews = [UIImageView]()
         
+        addFirstImageView(CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight))
+        
         for i in 0..<n {
-            let imageView = UIImageView(frame: CGRect(x: screenWidth * CGFloat(i + 1), y: 0, width: screenWidth, height: self.frame.height))
-            imageView.contentMode = UIViewContentMode.ScaleAspectFill
+            
+            let imageViewFrame = CGRect(x: screenWidth * CGFloat(i + 1), y: 0, width: screenHeight, height: screenHeight)
             let imageUrl = self.imageUrls[i]
-            let url = NSURL(string: imageUrl)!
-            imageView.sd_setImageWithURL(url, placeholderImage: self.placeholderImage)
-            
-            imageView.clipsToBounds = true
-            self.imageViews.append(imageView)
-            
-//            print("[CarouselView setupPhotos] photo with url: \(imageUrl), imageView frame: \(imageView.frame)")
-            self.scrollView!.addSubview(imageView)
+            addSubImageView(imageViewFrame, imageURL: imageUrl)
         }
+    }
+    
+    func addSubImageView(imageViewFrame: CGRect, imageURL: String) {
         
-        if n > 1 {
-            // add 1st pic to end for circular scroll
-            let imageView = UIImageView(frame: CGRect(x: screenWidth * CGFloat(n), y: 0, width: screenWidth, height: self.frame.height))
-            imageView.contentMode = UIViewContentMode.ScaleAspectFill
-            let imageUrl = self.imageUrls.first
-            let url = NSURL(string: imageUrl!)!
-            imageView.sd_setImageWithURL(url, placeholderImage: self.placeholderImage)
-            
-            self.imageViews.append(imageView)
-            self.scrollView!.addSubview(imageView)
-        }
+        let imageView = UIImageView(frame: imageViewFrame)
+        imageView.clipsToBounds = true
+        imageView.contentMode = UIViewContentMode.ScaleAspectFill
+        let url = NSURL(string: imageURL)!
+        imageView.sd_setImageWithURL(url, placeholderImage: self.placeholderImage)
+        self.imageViews.append(imageView)
+        self.scrollView!.addSubview(imageView)
+    }
+    
+    func addFirstImageView(firstFrame: CGRect) {
         
+        let firstImageView = UIImageView(frame: firstFrame)
+        firstImageView.clipsToBounds = true
+        firstImageView.contentMode = UIViewContentMode.ScaleAspectFill
+        firstImageView.sd_setImageWithURL(NSURL(string: imageUrls.last!), placeholderImage: self.placeholderImage)
+        self.imageViews.append(firstImageView)
+        self.scrollView?.addSubview(firstImageView)
     }
     
     // MARK: Timer
@@ -182,9 +186,6 @@ class CarouselView: UIView {
             self.scrollView!.setContentOffset(CGPoint(x: offset.x + self.frame.width, y: 0), animated: true)
         }
     }
-    
-
-    
 }
 
 // MARK: Scrolling
